@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" width="100%" height="100%">
+  <g transform="translate(15, 20)">
+    <!-- Outer Star Emblem -->
+    <polygon points="70,10 88,60 140,60 98,92 115,142 70,110 25,142 42,92 0,60 52,60" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round"/>
+    
+    <!-- Circle with TE inside Star -->
+    <circle cx="70" cy="76" r="32" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+    <text x="70" y="85" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="26" font-weight="900" fill="#FFFFFF" text-anchor="middle">TE</text>
+    
+    <!-- Vertical Divider Line -->
+    <line x1="175" y1="15" x2="175" y2="155" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Text Group: Team Excellent -->
+    <text x="200" y="68" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="52" font-weight="900" fill="#FFFFFF" letter-spacing="-1">Team</text>
+    <text x="200" y="122" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="52" font-weight="900" fill="#FFFFFF" letter-spacing="-1">Excellent</text>
+    
+    <!-- Tagline: NEET | IIT-JEE | Foundations -->
+    <text x="200" y="165" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="22" font-weight="800" fill="#FFFFFF" letter-spacing="1.5">NEET | IIT-JEE | Foundations</text>
+  </g>
+</svg>
