@@ -248,6 +248,22 @@ export default function App() {
     }
   };
 
+  const handleToggleGuestMode = async (testId, allowGuest) => {
+    try {
+      const res = await fetch(`${API_BASE}/admin/tests/${testId}/guest-mode`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ allowGuest })
+      });
+      const data = await res.json();
+      if (data.success) {
+        fetchTests();
+      }
+    } catch (err) {
+      console.warn('Error toggling guest mode:', err);
+    }
+  };
+
   const handleAddQuestion = async (e) => {
     e.preventDefault();
     if (!activeTest) return;
@@ -1176,6 +1192,18 @@ export default function App() {
                             <div className="flex items-center gap-1.5">
                               <CalendarIcon className="w-3.5 h-3.5 text-purple-600" />
                               <span>Date: {test.date}</span>
+                            </div>
+                            <div className="flex items-center gap-2 pt-1.5 border-t border-gray-100 mt-1.5">
+                              <input
+                                type="checkbox"
+                                id={`guest-${test._id}`}
+                                checked={test.allowGuest || false}
+                                onChange={(e) => handleToggleGuestMode(test._id, e.target.checked)}
+                                className="w-3.5 h-3.5 text-purple-600 border-gray-300 rounded focus:ring-purple-500 cursor-pointer"
+                              />
+                              <label htmlFor={`guest-${test._id}`} className="text-[11px] font-bold text-gray-500 select-none cursor-pointer">
+                                Allow Guest Attempt
+                              </label>
                             </div>
                           </div>
                         </div>
