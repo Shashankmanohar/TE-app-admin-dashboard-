@@ -7,7 +7,9 @@ import {
   Calendar as CalendarIcon, ChevronLeft, ChevronRight
 } from 'lucide-react';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://te-app-backend.vercel.app/api';
+const API_BASE = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
+  ? 'http://localhost:5000/api'
+  : (import.meta.env.VITE_API_URL || 'https://te-app-backend.vercel.app/api');
 
 const REAL_BATCHES_PRESETS = [
   { name: 'Target JEE', tag: 'JEE • Class Dropper', timing: '07:00 AM - 01:30 PM', subjects: 'Physics, Chemistry and Mathematics' },
