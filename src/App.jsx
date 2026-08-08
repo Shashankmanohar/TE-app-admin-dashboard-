@@ -137,7 +137,8 @@ export default function App() {
     totalMarks: 120,
     durationMinutes: 180,
     date: new Date().toISOString().split('T')[0],
-    batch: 'Target JEE'
+    batch: 'Target JEE',
+    allowGuest: false
   });
   const [newQuestion, setNewQuestion] = useState({
     questionText: '',
@@ -202,7 +203,8 @@ export default function App() {
           totalMarks: 120,
           durationMinutes: 180,
           date: new Date().toISOString().split('T')[0],
-          batch: 'Target JEE'
+          batch: 'Target JEE',
+          allowGuest: false
         });
         fetchTests();
       }
@@ -1150,9 +1152,16 @@ export default function App() {
                             <span className="text-[10px] font-extrabold text-[#552479] bg-purple-50 px-2.5 py-1 rounded-full border border-purple-100">
                               {test.subject}
                             </span>
-                            <span className="text-[10px] font-extrabold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-                              {test.batch}
-                            </span>
+                            <div className="flex gap-1.5">
+                              {test.allowGuest && (
+                                <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                                  Guest Mode
+                                </span>
+                              )}
+                              <span className="text-[10px] font-extrabold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                                {test.batch}
+                              </span>
+                            </div>
                           </div>
                           <h4 className="text-base font-black text-gray-900 mt-3">{test.title}</h4>
                           <div className="mt-3 space-y-1.5 text-xs font-semibold text-gray-500">
@@ -1642,6 +1651,19 @@ export default function App() {
                       <option key={b._id} value={b.name}>{b.name} ({b.tag})</option>
                     ))}
                   </select>
+                </div>
+
+                <div className="flex items-center gap-2 py-2">
+                  <input
+                    type="checkbox"
+                    id="allowGuest"
+                    checked={newTest.allowGuest || false}
+                    onChange={(e) => setNewTest({ ...newTest, allowGuest: e.target.checked })}
+                    className="w-4 h-4 rounded text-[#7B3FE4] focus:ring-[#7B3FE4] border-gray-700 bg-[#1C2237]"
+                  />
+                  <label htmlFor="allowGuest" className="text-gray-300 select-none cursor-pointer">
+                    Allow guest access (attempt without login)
+                  </label>
                 </div>
 
                 <div className="flex gap-3 pt-3">
