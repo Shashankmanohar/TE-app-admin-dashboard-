@@ -745,7 +745,7 @@ export default function App() {
 
               <div className="pt-3">
                 <button
-                  onClick={() => { setAdminEmail('superadmin@coaching.com'); setAdminPassword('password123'); }}
+                  onClick={() => { setAdminEmail('teamexcellentadmin@gmail.com'); setAdminPassword('Teamexcellent@123'); }}
                   className="w-full p-3.5 rounded-2xl bg-purple-50/60 border border-purple-100 hover:border-[#552479] flex items-center justify-between text-left group transition-all"
                 >
                   <div>
@@ -753,7 +753,7 @@ export default function App() {
                       SUPER ADMIN DEMO CREDENTIALS
                     </span>
                     <span className="text-xs font-bold text-gray-900">
-                      superadmin@coaching.com
+                      teamexcellentadmin@gmail.com
                     </span>
                   </div>
                   <span className="text-xs font-extrabold text-[#552479] bg-white px-2.5 py-1 rounded-lg shadow-sm border border-purple-100">
