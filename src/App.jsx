@@ -138,7 +138,8 @@ export default function App() {
     durationMinutes: 180,
     date: new Date().toISOString().split('T')[0],
     batch: 'Target JEE',
-    allowGuest: false
+    allowGuest: false,
+    category: 'None'
   });
   const [newQuestion, setNewQuestion] = useState({
     questionText: '',
@@ -204,7 +205,8 @@ export default function App() {
           durationMinutes: 180,
           date: new Date().toISOString().split('T')[0],
           batch: 'Target JEE',
-          allowGuest: false
+          allowGuest: false,
+          category: 'None'
         });
         fetchTests();
       }
@@ -248,19 +250,19 @@ export default function App() {
     }
   };
 
-  const handleToggleGuestMode = async (testId, allowGuest) => {
+  const handleUpdateTestSettings = async (testId, settings) => {
     try {
-      const res = await fetch(`${API_BASE}/admin/tests/${testId}/guest-mode`, {
+      const res = await fetch(`${API_BASE}/admin/tests/${testId}/settings`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ allowGuest })
+        body: JSON.stringify(settings)
       });
       const data = await res.json();
       if (data.success) {
         fetchTests();
       }
     } catch (err) {
-      console.warn('Error toggling guest mode:', err);
+      console.warn('Error updating test settings:', err);
     }
   };
 
@@ -1168,7 +1170,15 @@ export default function App() {
                             <span className="text-[10px] font-extrabold text-[#552479] bg-purple-50 px-2.5 py-1 rounded-full border border-purple-100">
                               {test.subject}
                             </span>
-                            <div className="flex gap-1.5">
+                            <div className="flex gap-1.5 flex-wrap justify-end">
+                              {test.category && test.category !== 'None' && (
+                                <span className="text-[10px] font-extrabold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200">
+                                  {test.category === 'JEE' && 'JEE'}
+                                  {test.category === 'NEET' && 'NEET'}
+                                  {test.category === 'Boards' && 'Boards'}
+                                  {test.category === 'NCERT' && 'NCERT & PYQ'}
+                                </span>
+                              )}
                               {test.allowGuest && (
                                 <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                                   Guest Mode
@@ -1193,17 +1203,32 @@ export default function App() {
                               <CalendarIcon className="w-3.5 h-3.5 text-purple-600" />
                               <span>Date: {test.date}</span>
                             </div>
-                            <div className="flex items-center gap-2 pt-1.5 border-t border-gray-100 mt-1.5">
+                            <div className="flex items-center gap-2 pt-2 border-t border-gray-100 mt-2">
                               <input
                                 type="checkbox"
                                 id={`guest-${test._id}`}
                                 checked={test.allowGuest || false}
-                                onChange={(e) => handleToggleGuestMode(test._id, e.target.checked)}
-                                className="w-3.5 h-3.5 text-purple-600 border-gray-300 rounded focus:ring-purple-500 cursor-pointer"
+                                onChange={(e) => handleUpdateTestSettings(test._id, { allowGuest: e.target.checked })}
+                                className="w-3.5 h-3.5 text-[#552479] border-gray-300 rounded focus:ring-[#552479] cursor-pointer"
                               />
-                              <label htmlFor={`guest-${test._id}`} className="text-[11px] font-bold text-gray-500 select-none cursor-pointer">
+                              <label htmlFor={`guest-${test._id}`} className="text-[11px] font-extrabold text-gray-600 select-none cursor-pointer">
                                 Allow Guest Attempt
                               </label>
+                            </div>
+
+                            <div className="flex items-center justify-between gap-1.5 pt-1.5 mt-1">
+                              <span className="text-[11px] font-bold text-gray-500">Landing Page Section:</span>
+                              <select
+                                value={test.category || 'None'}
+                                onChange={(e) => handleUpdateTestSettings(test._id, { category: e.target.value })}
+                                className="text-[10px] font-black text-gray-700 bg-gray-50 border border-gray-200 rounded px-1.5 py-0.5 focus:outline-none cursor-pointer"
+                              >
+                                <option value="None">None</option>
+                                <option value="JEE">IIT-JEE Main & Adv</option>
+                                <option value="NEET">NEET Medical</option>
+                                <option value="Boards">Board Examinations</option>
+                                <option value="NCERT">NCERT & PYQs</option>
+                              </select>
                             </div>
                           </div>
                         </div>
@@ -1678,6 +1703,21 @@ export default function App() {
                     {batches.map(b => (
                       <option key={b._id} value={b.name}>{b.name} ({b.tag})</option>
                     ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-gray-300 mb-1.5">Landing Page Section Category</label>
+                  <select
+                    value={newTest.category || 'None'}
+                    onChange={(e) => setNewTest({ ...newTest, category: e.target.value })}
+                    className="w-full p-3 bg-[#1C2237] border border-gray-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#7B3FE4] font-bold text-gray-300"
+                  >
+                    <option value="None">None</option>
+                    <option value="JEE">IIT-JEE Main & Adv</option>
+                    <option value="NEET">NEET Medical</option>
+                    <option value="Boards">Board Examinations</option>
+                    <option value="NCERT">NCERT & PYQs</option>
                   </select>
                 </div>
 
